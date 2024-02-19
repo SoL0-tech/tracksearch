@@ -12,3 +12,4 @@ type Track {
 type Query {
   tracks: [Track]
 }
+

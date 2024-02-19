@@ -2,7 +2,7 @@
   "scripts": {
     "dev": "npx nodemon",
     "build": "rimraf ./dist && tsc --build",
-    "start": "npm run build && node build/index.js"
+    "start": "npm run build && node build/server.js"
   },
   "devDependencies": {
     "@types/node": "^20.11.19",
