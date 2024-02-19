@@ -2,6 +2,11 @@ type Track {
   internalId: ID!
   createdAt: String!
   updatedAt: String!
+  name: String!
+  artist_name: String!
+  duration: Int!
+  ISRC: String!
+  release_date: String!
 }
 
 type Query {
