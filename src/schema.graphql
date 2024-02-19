@@ -1,0 +1,9 @@
+type Track {
+  internalId: ID!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Query {
+  tracks: [Track]
+}
