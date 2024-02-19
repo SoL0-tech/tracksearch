@@ -10,6 +10,12 @@ type Track {
 }
 
 type Query {
-  tracks: [Track]
+  getTrackByNameAndArtist(name: String!, artistName: String!): Track
+  getAllTracks: [Track]
+  getTrackById(internalId: ID!): Track
 }
 
+type Mutation {
+  updateTrack(internalId: ID!, name: String, artistName: String): Track
+  deleteTrack(internalId: ID!): String
+}
