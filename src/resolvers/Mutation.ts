@@ -5,7 +5,7 @@ export default {
     _: undefined,
     { internalId, name, artistName }: { internalId: string, name?: string, artistName?: string},
     { dataSources }: AppContext
-  ): Promise<ITrack> {
+  ): Promise<ITrack | null> {
     return await dataSources.trackAPI.updateTrack(internalId, { name, artistName })
   },
   async deleteTrack(

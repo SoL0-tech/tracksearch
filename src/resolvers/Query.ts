@@ -33,7 +33,7 @@ export default {
     _: undefined,
     { internalId }: { internalId: string },
     { dataSources }: AppContext
-  ): Promise<ITrack> {
+  ): Promise<ITrack | null> {
     return await dataSources.trackAPI.getTrack(internalId)
   }
 }

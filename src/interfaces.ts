@@ -8,5 +8,11 @@ export interface AppContext {
 }
 
 export interface ITrack {
-
+  name: string
+  artistName: string
+  createdAt: Date
+  updatedAt: Date
+  duration: number
+  ISRC?: string
+  releaseDate?: string
 }
