@@ -7,6 +7,7 @@ import * as mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import resolvers from './resolvers'
 import { ExternalAPI, TrackAPI, UserAPI } from "./dataSources";
+import { ListenOptions } from "net";
 
 // load environment variables
 dotenv.config()
@@ -43,7 +44,7 @@ const typeDefs = gql(
   })
 )
 
-async function startApolloServer() {
+export const createApolloServer = async (listenOptions: ListenOptions = { port: 4000 }) => {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
@@ -52,6 +53,7 @@ async function startApolloServer() {
 
   const { url } = await startStandaloneServer(
     server, {
+      listen: listenOptions,
       context: async (req) => {
         return {
           token: req.req.headers.authorization?.split(" ")?.[1],
@@ -67,11 +69,13 @@ async function startApolloServer() {
         }
       }
     })
-  
+
+  return { server, url }
+}
+
+createApolloServer().then(({ url }) => {
   console.log(`
     🚀  Server is running!
     📭  Query at ${url}
   `);
-}
-
-startApolloServer();
+});
