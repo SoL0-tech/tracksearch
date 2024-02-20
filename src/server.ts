@@ -3,8 +3,15 @@ import { startStandaloneServer } from "@apollo/server/standalone"
 import { readFileSync } from "fs"
 import path from "path";
 import { gql } from "graphql-tag"
+import * as mongoose from 'mongoose'
 import resolvers from './resolvers'
 import { ExternalAPI, TrackAPI } from "./dataSources";
+
+mongoose.connect('mongodb://localhost:27017/', {
+  autoCreate: true,
+  user: 'root',
+  pass: 'root',
+});
 
 const typeDefs = gql(
   readFileSync(path.resolve(__dirname, "./schemas/schema.graphql"), {

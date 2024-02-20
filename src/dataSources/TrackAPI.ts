@@ -1,29 +1,31 @@
+import { ITrack } from "../interfaces";
+
 export class TrackAPI {
   constructor() {
 
   }
 
-  async findTrack(name, artist) {
-
+  async findTrack(name: string, artist: string): Promise<ITrack> {
+    throw new Error('Not implemented')
   }
 
-  async getAllTracks() {
-
+  async getAllTracks(): Promise<Array<ITrack>> {
+    throw new Error('Not implemented')
   }
 
-  async getTrack(id) {
-
+  async getTrack(id: string): Promise<ITrack> {
+    throw new Error('Not implemented')
   }
 
-  async updateTrack(id, data) {
-
+  async updateTrack(id: string, data: Partial<ITrack>): Promise<ITrack> {
+    throw new Error('Not implemented')
   }
 
-  async deleteTrack(id) {
-
+  async deleteTrack(id: string): Promise<string> {
+    throw new Error('Not implemented')
   }
   
-  async createTrack(data) {
-    
+  async createTrack(data: Partial<ITrack>): Promise<ITrack> {
+    throw new Error('Not implemented')
   }
 }

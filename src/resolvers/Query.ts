@@ -8,7 +8,7 @@ export default {
     _: undefined,
     { name, artistName }: { name: string, artistName: string },
     { dataSources }: AppContext
-  ): Promise<ITrack> {
+  ): Promise<ITrack | null> {
     let track = await dataSources.trackAPI.findTrack(name, artistName)
 
     if (!track) {
