@@ -54,6 +54,7 @@ async function startApolloServer() {
     server, {
       context: async (req) => {
         return {
+          token: req.req.headers.authorization?.split(" ")?.[1],
           jwtSecret,
           dataSources: {
             externalAPI: new ExternalAPI(

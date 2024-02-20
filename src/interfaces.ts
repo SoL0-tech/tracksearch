@@ -1,6 +1,7 @@
 import { ExternalAPI, TrackAPI, UserAPI } from "dataSources"
 
 export interface AppContext {
+  token?: string
   jwtSecret: string
   dataSources: {
     externalAPI: ExternalAPI

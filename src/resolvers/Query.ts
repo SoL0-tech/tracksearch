@@ -3,13 +3,14 @@ import {
   ITrackGql,
 } from "../interfaces"
 import { TrackMapper } from "../mappers"
+import { withAuth } from "../utils"
 
 export default {
-  async getTrackByNameAndArtist(
+  getTrackByNameAndArtist: withAuth(async (
     _: undefined,
     { name, artistName }: { name: string, artistName: string },
     { dataSources }: AppContext
-  ): Promise<ITrackGql | null> {
+  ): Promise<ITrackGql | null> => {
     let track = await dataSources.trackAPI.findTrack(name, artistName)
     if (!track) {
       const remoteTrack = await dataSources.externalAPI.fetchTrack(name, artistName)
@@ -21,23 +22,23 @@ export default {
     }
     
     return TrackMapper.toGraphql(track)
-  },
+  }),
 
-  async getAllTracks(
+  getAllTracks: withAuth(async (
     _: undefined,
     __: undefined,
     { dataSources }: AppContext
-  ): Promise<Array<ITrackGql>> {
+  ): Promise<Array<ITrackGql>> => {
     const tracks = await dataSources.trackAPI.getAllTracks()
     return tracks.map(TrackMapper.toGraphql)
-  },
+  }),
 
-  async getTrackById(
+  getTrackById: withAuth(async (
     _: undefined,
     { internalId }: { internalId: string },
     { dataSources }: AppContext
-  ): Promise<ITrackGql | null> {
+  ): Promise<ITrackGql | null> => {
     const track = await dataSources.trackAPI.getTrack(internalId)
     return track ? TrackMapper.toGraphql(track) : null
-  }
+  })
 }

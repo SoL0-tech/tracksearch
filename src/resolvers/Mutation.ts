@@ -2,30 +2,31 @@ import jwt from 'jsonwebtoken'
 import { AppContext, IAuthResponseGql, ITrackGql } from "../interfaces"
 import { TrackMapper } from "../mappers"
 import { UserAPI } from '../dataSources'
+import { withAuth } from '../utils'
 
 export default {
-  async updateTrack(
+  updateTrack: withAuth(async (
     _: undefined,
     { internalId, name, artistName }: { internalId: string, name?: string, artistName?: string},
     { dataSources }: AppContext
-  ): Promise<ITrackGql | null> {
+  ): Promise<ITrackGql | null> => {
     const track = await dataSources.trackAPI.updateTrack(internalId, { name, artistName })
     return track ? TrackMapper.toGraphql(track) : null
-  },
+  }),
 
-  async deleteTrack(
+  deleteTrack: withAuth(async (
     _: undefined,
     { internalId }: { internalId: string },
     { dataSources }: AppContext
-  ): Promise<string> {
+  ): Promise<string> => {
     return await dataSources.trackAPI.deleteTrack(internalId)
-  },
+  }),
 
-  async login(
+  login: async (
     _: undefined,
     { username, password }: { username: string, password: string},
     { dataSources, jwtSecret }: AppContext
-  ): Promise<IAuthResponseGql> {
+  ): Promise<IAuthResponseGql> => {
     const user = await dataSources.userAPI.findUser(username)
     if (!user || !(await UserAPI.isCorrectPassword(password, user.password))) {
       throw new Error('Invalid username/password')
@@ -38,11 +39,11 @@ export default {
     }
   },
 
-  async signup(
+  signup: async (
     _: undefined,
     { username, password }: { username: string, password: string},
     { dataSources, jwtSecret }: AppContext
-  ): Promise<IAuthResponseGql> {
+  ): Promise<IAuthResponseGql> => {
     const user = await dataSources.userAPI.findUser(username)
     if (user) {
       throw new Error('Username already taken')
