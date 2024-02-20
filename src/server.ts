@@ -6,7 +6,7 @@ import { gql } from "graphql-tag"
 import * as mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import resolvers from './resolvers'
-import { ExternalAPI, TrackAPI } from "./dataSources";
+import { ExternalAPI, TrackAPI, UserAPI } from "./dataSources";
 
 // load environment variables
 dotenv.config()
@@ -16,16 +16,18 @@ for (const name of [
   'MONGO_PASSWORD',
   'ACRCLOUD_BASEURL',
   'ACRCLOUD_TOKEN',
+  'JWT_SECRET',
 ]) {
   if (!process.env[name]) {
     throw new Error(`Missing environment variable ${name}`)
   }
 }
 
-const mongoUser = process.env['MONGO_USERNAME'] || ""
-const mongoPass = process.env['MONGO_PASSWORD'] || ""
-const acrBaseUrl = process.env['ACRCLOUD_BASEURL'] || ""
-const acrToken = process.env['ACRCLOUD_TOKEN'] || ""
+const mongoUser = process.env['MONGO_USERNAME'] || ''
+const mongoPass = process.env['MONGO_PASSWORD'] || ''
+const acrBaseUrl = process.env['ACRCLOUD_BASEURL'] || ''
+const acrToken = process.env['ACRCLOUD_TOKEN'] || ''
+const jwtSecret = process.env['JWT_SECRET'] || ''
 
 // connect to mongo
 mongoose.connect('mongodb://localhost:27017/', {
@@ -52,12 +54,14 @@ async function startApolloServer() {
     server, {
       context: async (req) => {
         return {
+          jwtSecret,
           dataSources: {
-            trackAPI: new TrackAPI(),
             externalAPI: new ExternalAPI(
               acrBaseUrl,
               acrToken,
             ),
+            trackAPI: new TrackAPI(),
+            userAPI: new UserAPI(),
           }
         }
       }

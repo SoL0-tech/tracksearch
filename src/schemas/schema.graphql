@@ -9,6 +9,10 @@ type Track {
   release_date: String!
 }
 
+type AuthResponse {
+  token: String
+}
+
 type Query {
   getTrackByNameAndArtist(name: String!, artistName: String!): Track
   getAllTracks: [Track]
@@ -18,4 +22,6 @@ type Query {
 type Mutation {
   updateTrack(internalId: ID!, name: String, artistName: String): Track
   deleteTrack(internalId: ID!): String
+  login(username: String!, password: String!): AuthResponse
+  signup(username: String!, password: String!): AuthResponse
 }

@@ -1,9 +1,11 @@
-import { ExternalAPI, TrackAPI } from "dataSources"
+import { ExternalAPI, TrackAPI, UserAPI } from "dataSources"
 
 export interface AppContext {
+  jwtSecret: string
   dataSources: {
     externalAPI: ExternalAPI
     trackAPI: TrackAPI
+    userAPI: UserAPI
   }
 }
 
@@ -27,4 +29,16 @@ export interface ITrackGql {
   duration: number
   ISRC?: string
   release_date?: string
+}
+
+export interface IUser {
+  _id?: string
+  username: string
+  password: string
+  createdAt?: Date
+  updatedAt?: Date
+}
+
+export interface IAuthResponseGql {
+  token: string
 }
