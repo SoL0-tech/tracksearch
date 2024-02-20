@@ -29,7 +29,15 @@ npm run dev
 
 This starts the server in development mode, which restarts when source files are changed.
 
-### Notes on Evaluation Criteria
+### Getting through the signup/login flow
+
+Two mutations were implemented to facilitate fulfilment of the token-auth requirement:
+- `signup(username: String, password: String)`: Allows a user to sign up for access to the track search application. This will create a User in the database and return the access token. 
+- `login(username: String, password: String)`: Allows a user to login using their existing credentials. Returns an access token valid for 1 day.
+
+The security here is obviously a bit artificial, as anyone can create a User, but demonstrates a foundation and is super easy for the reviewers to use.
+
+## Notes on Evaluation Criteria
 
 - **Correct implementation of the GraphQL schema and resolvers**: I tried to keep the schema identical to the one specified for Track, naming the queries and mutations sensibly and following conventions when deciding on return types (for instance, for `deleteTrack`, which returns the id of the Track deleted, or an empty string if nothing was deleted)
 
@@ -41,7 +49,7 @@ This starts the server in development mode, which restarts when source files are
 
 - **Tests properly written**: Skipped the tests, but hope that what I did show (and my comments) demonstrates some understanding of how they would be implemented.
 
-### Shortcomings and Known Issues
+## Shortcomings and Known Issues
 
 Due to time considerations, there were a couple of things that I didn't address before submission:
 
@@ -49,9 +57,11 @@ Due to time considerations, there were a couple of things that I didn't address 
 
 - A testing scaffold was implemented at the end to demonstrate some basic understanding of testing structure, but mocking mongoose felt like a poor use of time for the sake of two tests, considering it was almost close-of-business Tuesday. I hope this doesn't count against me too much.
 
-### Final comments
+- The server is exposed through `http` (not using TLS/SSL). This obviously makes the token vulnerable to in-flight interception. In a production environment, we would want to use `https`.
 
-Overall enjoyed the assignment.
+## Final comments
 
-Thanks all for your consideration, and hope for positive feedback.
+Overall, I enjoyed the assignment!
+
+Thanks to all for your consideration, and I hope for positive feedback.
 
