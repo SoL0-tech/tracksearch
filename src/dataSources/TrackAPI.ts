@@ -37,7 +37,7 @@ export class TrackAPI {
 
   async updateTrack(id: string, data: Partial<ITrack>): Promise<ITrack | null> {
     try {
-      const track = await Track.findByIdAndUpdate(id, data)
+      const track = await Track.findByIdAndUpdate(id, data, { new: true })
       return track
     } catch (e) {
       console.error('Error updating track:', e)

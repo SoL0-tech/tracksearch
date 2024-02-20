@@ -11,7 +11,6 @@ export default {
     { dataSources }: AppContext
   ): Promise<ITrackGql | null> {
     let track = await dataSources.trackAPI.findTrack(name, artistName)
-
     if (!track) {
       const remoteTrack = await dataSources.externalAPI.fetchTrack(name, artistName)
       if (!remoteTrack) {
