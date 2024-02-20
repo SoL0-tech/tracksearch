@@ -27,13 +27,13 @@ export default {
     __: undefined,
     { dataSources }: AppContext
   ): Promise<Array<ITrack>> {
-    return dataSources.trackAPI.getAllTracks()
+    return await dataSources.trackAPI.getAllTracks()
   },
   async getTrackById(
     _: undefined,
     { internalId }: { internalId: string },
     { dataSources }: AppContext
   ): Promise<ITrack> {
-    return dataSources.trackAPI.getTrack(internalId)
+    return await dataSources.trackAPI.getTrack(internalId)
   }
 }

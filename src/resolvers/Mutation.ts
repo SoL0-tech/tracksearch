@@ -6,13 +6,13 @@ export default {
     { internalId, name, artistName }: { internalId: string, name?: string, artistName?: string},
     { dataSources }: AppContext
   ): Promise<ITrack> {
-    return {}
+    return await dataSources.trackAPI.updateTrack(internalId, { name, artistName })
   },
   async deleteTrack(
     _: undefined,
     { internalId }: { internalId: string },
     { dataSources }: AppContext
   ): Promise<string> {
-    return ""
+    return await dataSources.trackAPI.deleteTrack(internalId)
   }
 }
