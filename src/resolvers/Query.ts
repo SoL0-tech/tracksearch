@@ -1,14 +1,15 @@
 import {
   AppContext,
-  ITrack,
+  ITrackGql,
 } from "../interfaces"
+import { TrackMapper } from "../mappers"
 
 export default {
   async getTrackByNameAndArtist(
     _: undefined,
     { name, artistName }: { name: string, artistName: string },
     { dataSources }: AppContext
-  ): Promise<ITrack | null> {
+  ): Promise<ITrackGql | null> {
     let track = await dataSources.trackAPI.findTrack(name, artistName)
 
     if (!track) {
@@ -20,20 +21,24 @@ export default {
       track = await dataSources.trackAPI.createTrack(remoteTrack)
     }
     
-    return track
+    return TrackMapper.toGraphql(track)
   },
+
   async getAllTracks(
     _: undefined,
     __: undefined,
     { dataSources }: AppContext
-  ): Promise<Array<ITrack>> {
-    return await dataSources.trackAPI.getAllTracks()
+  ): Promise<Array<ITrackGql>> {
+    const tracks = await dataSources.trackAPI.getAllTracks()
+    return tracks.map(TrackMapper.toGraphql)
   },
+
   async getTrackById(
     _: undefined,
     { internalId }: { internalId: string },
     { dataSources }: AppContext
-  ): Promise<ITrack | null> {
-    return await dataSources.trackAPI.getTrack(internalId)
+  ): Promise<ITrackGql | null> {
+    const track = await dataSources.trackAPI.getTrack(internalId)
+    return track ? TrackMapper.toGraphql(track) : null
   }
 }

@@ -8,6 +8,7 @@ export interface AppContext {
 }
 
 export interface ITrack {
+  _id: string
   name: string
   artistName: string
   createdAt: Date
@@ -15,4 +16,15 @@ export interface ITrack {
   duration: number
   ISRC?: string
   releaseDate?: string
+}
+
+export interface ITrackGql {
+  internalId: string
+  name: string
+  artist_name: string
+  createdAt: string
+  updatedAt: string
+  duration: number
+  ISRC?: string
+  release_date?: string
 }
